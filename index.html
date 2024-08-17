@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #apple {
+            width: 100px;
+            cursor: pointer;
+        }
+        #watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Apple Clicker</h1>
+    <img id="apple" src="apple.png" alt="Apple">
+    <p>Points: <span id="points">0</span></p>
+    <button id="buyAutoclicker">Buy Autoclicker (100 points)</button>
+    <p id="watermark">a FakeWeb project</p>
+
+    <script>
+        let points = 0;
+        let autoclickerCost = 100;
+        let autoclickerSpeed = 1000;
+        let maxAutoclickerSpeed = 6;
+        let autoclickerInterval;
+
+        document.getElementById('apple').addEventListener('click', () => {
+            points++;
+            document.getElementById('points').innerText = points;
+        });
+
+        document.getElementById('buyAutoclicker').addEventListener('click', () => {
+            if (points >= autoclickerCost) {
+                points -= autoclickerCost;
+                document.getElementById('points').innerText = points;
+                autoclickerSpeed = Math.max(autoclickerSpeed / 2, 1000 / maxAutoclickerSpeed);
+                clearInterval(autoclickerInterval);
+                autoclickerInterval = setInterval(() => {
+                    points++;
+                    document.getElementById('points').innerText = points;
+                }, autoclickerSpeed);
+            }
+        });
+    </script>
+</body>
+</html>
